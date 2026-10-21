@@ -21,7 +21,8 @@
         "@types/jest": "^27.5.2",
         "@types/node": "^17.0.45",
         "@types/react": "^18.2.48",
-        "@types/react-dom": "^18.2.18"
+        "@types/react-dom": "^18.2.18",
+        "tsx": "^4.23.15"
     },
     "resolutions": {
         "@types/react": "18.2.48",
@@ -31,7 +32,8 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "train": "tsx train.ts"
     },
     "eslintConfig": {
         "extends": [
