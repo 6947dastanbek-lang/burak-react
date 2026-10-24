@@ -1,9 +1,9 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import Basket from "./Basket";
 
-export function HomeNavbar() {
+export default function HomeNavbar() {
     const authMember = null;
-
     return (
         <div className="home-navbar">
             <Container className="navbar-container">
@@ -22,7 +22,6 @@ export function HomeNavbar() {
                                 Home
                             </NavLink>
                         </Box>
-
                         <Box className={"hover-line"}>
                             <NavLink
                                 to="/products"
@@ -31,7 +30,6 @@ export function HomeNavbar() {
                                 Products
                             </NavLink>
                         </Box>
-
                         {authMember ? (
                             <Box className={"hover-line"}>
                                 <NavLink
@@ -42,7 +40,6 @@ export function HomeNavbar() {
                                 </NavLink>
                             </Box>
                         ) : null}
-
                         {authMember ? (
                             <Box className={"hover-line"}>
                                 <NavLink
@@ -53,15 +50,12 @@ export function HomeNavbar() {
                                 </NavLink>
                             </Box>
                         ) : null}
-
                         <Box className={"hover-line"}>
                             <NavLink to="/help" activeClassName={"underline"}>
                                 Help
                             </NavLink>
                         </Box>
-
-                        {/* BASKET */}
-
+                        <Basket />
                         {!authMember ? (
                             <Box>
                                 <Button
@@ -85,13 +79,10 @@ export function HomeNavbar() {
                         <Box className={"head-main-txt"}>
                             World's Most Delicious Cousine
                         </Box>
-
                         <Box className={"wel-txt"}>
                             The Choice, not just a choice
                         </Box>
-
                         <Box className={"service-txt"}>24 hours service</Box>
-
                         <Box className={"signup"}>
                             {!authMember ? (
                                 <Button
@@ -103,7 +94,6 @@ export function HomeNavbar() {
                             ) : null}
                         </Box>
                     </Stack>
-
                     <Box className={"logo-frame"}>
                         <div className={"logo-img "}> </div>
                     </Box>
