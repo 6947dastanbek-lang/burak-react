@@ -39,7 +39,7 @@ export default function Footer() {
                         <Stack>
                             <Box>
                                 <Box className={"foot-category-title"}>
-                                    Bo'limlar
+                                    Departments
                                 </Box>
                                 <Box className={"foot-category-link"}>
                                     <Link to="/">Home</Link>
