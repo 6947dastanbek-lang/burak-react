@@ -145,7 +145,7 @@
     background: url("/public/img/logo.webp");
     background-size: contain;
     background-repeat: no-repeat;
-    filter: invert(5%);
+    filter: invert(1%);
 }
 
 /* OTHER-NAVBAR */
