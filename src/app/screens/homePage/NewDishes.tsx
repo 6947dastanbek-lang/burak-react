@@ -17,75 +17,84 @@ const newDishes = [
 
 export default function NewDishes() {
     return (
-        <div className="new-products-frame">
+        <div className={"new-products-frame"}>
             <Container>
-                <Stack className="main">
-                    <Box className="category-title">Fresh Menu</Box>
-                    <Stack className="cards-frame">
+                <Stack className={"main"}>
+                    <Box className={"category-title"}>Fresh Menu</Box>
+
+                    <Stack className={"cards-frame"}>
                         <CssVarsProvider>
-                            {newDishes.map((ele, index) => {
-                                return (
-                                    <Card
-                                        key={index}
-                                        variant="outlined"
-                                        className={"card"}
-                                    >
-                                        <CardOverflow>
-                                            <div className="product-sale">
-                                                Normal size
-                                            </div>
-                                            <AspectRatio ratio="1">
-                                                <img
-                                                    src={ele.imagePath}
-                                                    alt=""
-                                                />
-                                            </AspectRatio>
-                                        </CardOverflow>
-
-                                        <CardOverflow
-                                            variant="soft"
-                                            className="product-detail"
+                            {newDishes.length !== 0 ? (
+                                newDishes.map((ele, index) => {
+                                    return (
+                                        <Card
+                                            key={index}
+                                            variant="outlined"
+                                            className={"card"}
                                         >
-                                            <Stack className="info">
-                                                <Stack flexDirection="row">
-                                                    <Typography
-                                                        className={"title"}
-                                                    >
-                                                        {ele.productName}
-                                                    </Typography>
+                                            <CardOverflow>
+                                                <div className="product-sale">
+                                                    Normal size
+                                                </div>
 
-                                                    <Divider
-                                                        width="2"
-                                                        height="24"
-                                                        bg="#d9d9d9"
+                                                <AspectRatio ratio="1">
+                                                    <img
+                                                        src={ele.imagePath}
+                                                        alt=""
                                                     />
+                                                </AspectRatio>
+                                            </CardOverflow>
 
-                                                    <Typography
-                                                        className={"price"}
+                                            <CardOverflow
+                                                variant="soft"
+                                                className={"product-detail"}
+                                            >
+                                                <Stack className={"info"}>
+                                                    <Stack
+                                                        flexDirection={"row"}
                                                     >
-                                                        $12
-                                                    </Typography>
-                                                </Stack>
-
-                                                <Stack>
-                                                    <Typography
-                                                        className={"views"}
-                                                    >
-                                                        20
-                                                        <VisibilityIcon
-                                                            sx={{
-                                                                fontSize: 20,
-                                                                marginLeft:
-                                                                    "5px",
-                                                            }}
+                                                        <Typography
+                                                            className={"title"}
+                                                        >
+                                                            {ele.productName}
+                                                        </Typography>
+                                                        <Divider
+                                                            width="2"
+                                                            height="24"
+                                                            bg="#d9d9d9"
                                                         />
-                                                    </Typography>
+
+                                                        <Typography
+                                                            className={"price"}
+                                                        >
+                                                            $12
+                                                        </Typography>
+                                                    </Stack>
+
+                                                    <Stack>
+                                                        <Typography
+                                                            className={"views"}
+                                                        >
+                                                            20
+                                                            <VisibilityIcon
+                                                                sx={{
+                                                                    fontSize: 20,
+                                                                    marginLeft:
+                                                                        "5px",
+                                                                }}
+                                                            />
+                                                        </Typography>
+                                                    </Stack>
                                                 </Stack>
-                                            </Stack>
-                                        </CardOverflow>
-                                    </Card>
-                                );
-                            })}
+                                            </CardOverflow>
+                                        </Card>
+                                    );
+                                })
+                            ) : (
+                                <Box className={"no-data"}>
+                                    New products are not available!
+                                </Box>
+                            )}
                         </CssVarsProvider>
                     </Stack>
                 </Stack>
