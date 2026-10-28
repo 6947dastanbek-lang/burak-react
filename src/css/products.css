@@ -1,0 +1,328 @@
+/* ================= PRODUCTS PAGE ================= */
+.products-page {
+    background-color: #f8f9fa;
+    font-family: "Poppins", sans-serif;
+}
+.products {
+    padding: 40px 0 60px;
+}
+.products > .MuiContainer-root > .MuiStack-root {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    column-gap: 20px;
+}
+.products .restaurant-header {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.restaurant-header .avatar-big-box {
+    grid-column: 2;
+    text-align: center;
+    white-space: nowrap;
+}
+.avatar-big-box .top-text span {
+    font-family: "Georgia", serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #333333;
+}
+.restaurant-header .restaurant-search {
+    grid-column: 3;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+}
+.restaurant-search .MuiOutlinedInput-root {
+    height: 38px;
+    padding-right: 0;
+    border-radius: 25px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.restaurant-search .MuiOutlinedInput-notchedOutline {
+    border: none;
+}
+.restaurant-search .MuiInputBase-input {
+    width: 130px;
+    padding: 10px 14px;
+    font-family: "Georgia", serif;
+    font-size: 13px;
+}
+.restaurant-search .search-btn {
+    min-width: auto;
+    padding: 8px 12px;
+    border-radius: 25px;
+    background-color: #333333;
+    color: #dfbd83;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+.restaurant-search .search-btn:hover {
+    background-color: #222222;
+}
+/* ---------- Filter: NEW / PRICE / VIEWS ---------- */
+.products .dishes-filter-section {
+    grid-column: 2;
+    grid-row: 2;
+    margin-bottom: 25px;
+}
+.dishes-filter-section .dishes-filter-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+.dishes-filter-box .order {
+    flex: 0 0 auto;
+    min-width: unset !important;
+    padding: 7px 17px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12) !important;
+}
+.dishes-filter-box .order:hover {
+    opacity: 0.9;
+}
+.dishes-filter-box .order.MuiButton-containedPrimary {
+    background-color: #333333 !important;
+    color: #ffffff !important;
+}
+.dishes-filter-box .order.MuiButton-containedSecondary,
+.dishes-filter-box .order.MuiButton-outlined {
+    background-color: #dfbd83 !important;
+    color: #333333 !important;
+    border: none !important;
+}
+.products .list-category-section {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+}
+.list-category-section .category-navigation {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    gap: 10px;
+}
+.category-navigation button {
+    min-width: 35px;
+    padding: 16px 8px;
+    border: none;
+    border-radius: 10px;
+    background-color: #dfc18f;
+    color: #333333;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.category-navigation button:hover,
+.category-navigation button.active {
+    background-color: #333333;
+    color: #dfc18f;
+}
+.list-category-section .product-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    flex: 1;
+    min-width: 0;
+    gap: 24px;
+}
+.product-wrapper .product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+.product-card .product-img {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 230px;
+    border-radius: 12px 56px 12px 12px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.4s ease-in-out;
+}
+.product-card .product-img:hover {
+    border-radius: 12px 12px 12px 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.product-card .product-img .product-sale {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background-color: #ff9800;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.product-card .product-img .shop-btn,
+.product-card .product-img .view-btn {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.3s ease-in-out,
+        visibility 0.3s ease-in-out;
+}
+.product-card .product-img:hover .shop-btn,
+.product-card .product-img:hover .view-btn {
+    opacity: 1;
+    visibility: visible;
+}
+.product-card .product-img .shop-btn {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    min-width: 60px;
+    height: 50px;
+    padding: 0;
+    border-radius: 10px;
+    background-color: #8e24aa;
+}
+.product-card .product-img .shop-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+.product-card .product-img .view-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    min-width: unset;
+    padding: 4px;
+}
+.product-card .product-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 14px;
+}
+.product-desc .product-title {
+    color: #2c3e50;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+}
+.product-desc .product-desc {
+    flex-direction: row;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 0;
+    color: #7f8c8d;
+    font-size: 17px;
+    font-weight: 600;
+}
+.product-desc .product-desc svg {
+    color: #f39c12;
+    font-size: 20px;
+}
+.product-wrapper .no-data {
+    width: 100%;
+    padding: 30px;
+    color: #666666;
+    font-size: 16px;
+    text-align: center;
+}
+/* ---------- Pagination---------- */
+.products .pagination-section {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+}
+/* ================= OUR FAMILY BRANDS ================= */
+.brands-logo {
+    padding: 60px 0;
+    background-color: #0d1317;
+    text-align: center;
+}
+.brands-logo .brands-content {
+    align-items: center;
+}
+.brands-content .title {
+    margin-bottom: 40px;
+    color: #dfc18f;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 600;
+}
+.brands-content .brands-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 220px));
+    justify-content: center;
+    gap: 48px;
+    width: 100%;
+}
+.brands-wrapper .brand-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    background: #0d1317;
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.brands-wrapper .brand-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
+}
+.brand-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+/* ================= ADDRESS ================= */
+.address {
+    padding: 60px 0;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+.address .title {
+    margin-bottom: 30px;
+    color: #333333;
+    font-family: "Georgia", serif;
+    font-size: 32px;
+    font-weight: 700;
+}
+.address iframe {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+/* ChosenProduct */
