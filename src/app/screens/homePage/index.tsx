@@ -25,10 +25,16 @@ const popularDishesRetrieve = createSelector(
   }),
 );
 export default function HomePage() {
+  // selector => component
+  //selectordan qaytarilgan popularDishes ni destructure qildik
   const { setPopularDishes } = actionDispatch(useDispatch());
   const { popularDishes } = useSelector(popularDishesRetrieve);
+  console.log(process.env.REACT_APP_API_URL);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    //backend server data request => data
+    //slice:Data => store
+  }, []);
   return (
     <div className={"homepage"}>
       <Statistics />

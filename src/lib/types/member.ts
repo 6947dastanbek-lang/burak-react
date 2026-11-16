@@ -33,7 +33,7 @@ export interface LoginInput {
 }
 
 export interface MemberUpdateInput {
-  // id olip tashladik auth keyin token orqali kim update qilayotganini bilip olamiz
+  // id olip tashladik backendda auth keyin token orqali kim update qilayotganini bilip olip idni shakillantiramiz.
   memberNick?: string;
   memberPhone?: string;
   memberPassword?: string;

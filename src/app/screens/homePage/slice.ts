@@ -2,17 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import { HomePageState } from "../../../lib/types/screen";
 
 const initialState: HomePageState = {
+  //homepage screen componentiga bogliq slice bolgani uchin HomePageState interfaceini initialStatega tenglashtirdik.
   popularDishes: [],
   newDishes: [],
   topUsers: [],
-};
+}; //hammasini boshlangish qiymati bosh array backenddan keladigan data array boladi.
 
 const homePageSlice = createSlice({
   name: "homePage",
   initialState,
   reducers: {
     setPopularDishes: (state, action) => {
-      state.popularDishes = action.payload; //Yani action.payload ni initialStateda joylashgan popularDishes keyining valuesiga tenglashtir degani
+      state.popularDishes = action.payload; //Yani action.payload ni initialStateda joylashgan
+      // popularDishes keyining valuesiga tenglashtir degani
     },
     setNewDishes: (state, action) => {
       state.newDishes = action.payload;
