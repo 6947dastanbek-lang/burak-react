@@ -11,7 +11,7 @@ class MemberService {
 
   public async getTopUsers(): Promise<Member[]> {
     try {
-      const url = this.path + "/member/top-users";
+      const url = this.path + "/member/top-users"; // bu yerda api manzil va endpointni urlg ga  tenladik.
       const result = await axios.get(url);
       console.log("getTopUsers:", result);
 

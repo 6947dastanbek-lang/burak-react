@@ -28,7 +28,7 @@ export default function HomePage() {
     actionDispatch(useDispatch());
   useEffect(() => {
     // Backend server data fetch => Data
-    const product = new ProductService();
+    const product = new ProductService(); //ProductService classidan yangi instance object yaratdik. Bu bizga backend server bilan ishlash imkonini beradi.
 
     product
       .getProducts({
@@ -52,7 +52,7 @@ export default function HomePage() {
     const member = new MemberService();
     member
       .getTopUsers()
-      .then((data) => setTopUsers(data))
+      .then((data) => setTopUsers(data)) //setTopUsers kamandasini dispatch qilip, backenddan kelgan data ni redux store ga joylashtirish uchun ishlatdik.
       .catch((err) => console.log(err));
   }, []);
 

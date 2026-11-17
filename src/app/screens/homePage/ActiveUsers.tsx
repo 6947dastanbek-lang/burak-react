@@ -21,7 +21,7 @@ const topUsersRetrieve = createSelector(
 );
 
 export default function ActiveUsers() {
-  const { topUsers } = useSelector(topUsersRetrieve);
+  const { topUsers } = useSelector(topUsersRetrieve); //bu bizga component ichida redux store dagi data ni ishlatish imkonini beradi.
   return (
     <div className="active-users-frame">
       <Container>
