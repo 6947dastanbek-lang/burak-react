@@ -23,6 +23,8 @@ import { ProductCollection } from "../../../lib/enums/product.enum";
 import ProductService from "../../services/ProductService";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
+import { CartItem } from "../../../lib/types/search";
+import { log } from "console";
 /** REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data)),
@@ -30,13 +32,17 @@ const actionDispatch = (dispatch: Dispatch) => ({
 const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
+interface ProductsProps {
+  onAdd: (item: CartItem) => void;
+}
 const brands = [
   { name: "Burak Gurme", imagePath: "/img/gurme.webp" },
   { name: "Burak Seafood", imagePath: "/img/seafood.webp" },
   { name: "Burak Sweets", imagePath: "/img/sweets.webp" },
   { name: "Burak Doner", imagePath: "/img/doner.webp" },
 ];
-export default function Products() {
+export default function Products(props: ProductsProps) {
+  const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -46,7 +52,8 @@ export default function Products() {
     productCollection: ProductCollection.DISH,
     search: "",
   });
-  const [searchText, setSearchText] = useState<string>("");
+  const [searchText, setSearchText] = useState<string>(""); // input qiymatini saqlash
+  const history = useHistory(); //router orqali boshqa sahifaga otish
   /** BACKEND DATA FETCH */
   useEffect(() => {
     const product = new ProductService();
@@ -58,7 +65,7 @@ export default function Products() {
       })
       .catch((err) => console.log(err));
   }, [productSearch]);
-  const history = useHistory();
+
   /** SEARCH TEXT */
   useEffect(() => {
     if (searchText === "") {
@@ -114,6 +121,7 @@ export default function Products() {
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   onKeyDown={(e) => {
+                    //agar enter bosilsa yoki search bosilsa
                     if (e.key === "Enter") {
                       searchProductHandler();
                     }
@@ -261,13 +269,27 @@ export default function Products() {
                         onClick={() => chooseDishHandler(product._id)}
                       >
                         <Stack
-                          className="product-img"
+                          className={"product-img"}
                           sx={{
                             backgroundImage: `url(${imagePath})`,
                           }}
                         >
-                          <div className="product-sale">{sizeVolume}</div>
-                          <Button className="shop-btn">
+                          <div className={"product-sale"}>{sizeVolume}</div>
+                          <Button
+                            className={"shop-btn"}
+                            onClick={(e) => {
+                              console.log("BUTTON PRESSED");
+                              onAdd({
+                                _id: product._id,
+                                quantity: 1,
+                                name: product.productName,
+                                price: product.productPrice,
+                                image: product.productImages[0],
+                              });
+
+                              e.stopPropagation();
+                            }}
+                          >
                             <img
                               src="/icons/shopping-cart.svg"
                               style={{ display: "flex" }}

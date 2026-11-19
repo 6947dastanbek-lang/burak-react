@@ -26,6 +26,7 @@ export default function HomePage() {
 
   const { setPopularDishes, setNewDishes, setTopUsers } =
     actionDispatch(useDispatch());
+
   useEffect(() => {
     // Backend server data fetch => Data
     const product = new ProductService(); //ProductService classidan yangi instance object yaratdik. Bu bizga backend server bilan ishlash imkonini beradi.
