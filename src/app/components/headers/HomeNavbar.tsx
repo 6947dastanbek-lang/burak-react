@@ -146,7 +146,12 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem onClick={handleLogoutRequest}>
+              <MenuItem
+                onClick={() => {
+                  onDeleteAll();
+                  handleLogoutRequest();
+                }}
+              >
                 <ListItemIcon>
                   <Logout fontSize="small" style={{ color: "blue" }} />
                 </ListItemIcon>

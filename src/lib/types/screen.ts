@@ -1,11 +1,12 @@
 import { Member } from "./member";
+import { Order } from "./order";
 import { Product } from "./product";
 
 // ** REACT APP STATE **// //Butin appimizni stateini shu faylda hosil qildik .
 export interface AppRootState {
   homePage: HomePageState; //Home pagega bogliq bolgan state interfaceini shaqirip oldik CALL
   productsPage: ProductsPageState;
-  //   ordersPage: OrdersPageState;
+  ordersPage: OrdersPageState;
   //   userPage: UserPageState;
   //   helpPage: HelpPageState;
 }
@@ -16,12 +17,18 @@ export interface HomePageState {
   newDishes: Product[];
   topUsers: Member[];
 }
+// ** PRODUCTS PAGE **//
 export interface ProductsPageState {
   restaurant: Member | null;
   chosenProduct: Product | null;
   products: Product[];
 }
-// ** PRODUCTS PAGE **//
+
 // ** ORDERS PAGE **//
+export interface OrdersPageState {
+  pausedOrders: Order[];
+  processOrders: Order[];
+  finishedOrders: Order[];
+}
 // ** USER PAGE **//
 // ** HELP PAGE **//

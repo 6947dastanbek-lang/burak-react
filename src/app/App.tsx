@@ -50,6 +50,8 @@ function App() {
       const member = new MemberService();
       await member.logout();
       await sweetTopSuccessAlert("success", 700);
+
+      localStorage.removeItem("cartData");
       setAuthMember(null);
     } catch (err) {
       console.log(err);
