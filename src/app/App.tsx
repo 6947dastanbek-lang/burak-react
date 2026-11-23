@@ -5,8 +5,6 @@ import {
   Switch,
   useLocation,
 } from "react-router-dom";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { RippleBadge } from "./MaterialTheme/styled";
 import HomePage from "./screens/homePage";
 import ProductsPage from "./screens/productsPage";
 import OrdersPage from "./screens/ordersPage";
@@ -15,19 +13,16 @@ import HomeNavbar from "./components/headers/HomeNavbar";
 import OtherNavbar from "./components/headers/OtherNavbar";
 import Footer from "./components/footer";
 import HelpPage from "./screens/helpPage";
-import "../css/app.css";
-import "../css/navbar.css";
-import "../css/footer.css";
 import { useState } from "react";
-import { CartItem } from "../lib/types/search";
 import useBasket from "./hooks/useBasket";
 import AuthenticationModal from "./components/auth";
 import { Messages } from "../lib/config";
 import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
-import { T } from "../lib/types/common";
 import MemberService from "./services/MemberService";
 import { useGlobals } from "./hooks/useGlobals";
-
+import "../css/app.css";
+import "../css/navbar.css";
+import "../css/footer.css";
 function App() {
   const location = useLocation();
   const { setAuthMember } = useGlobals();

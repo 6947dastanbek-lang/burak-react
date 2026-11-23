@@ -9,7 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import "./css/index.css";
 import theme from "./app/MaterialTheme";
 import { BrowserRouter } from "react-router-dom";
-import ContextProvider from "./app/context/contextProvider";
+import ContextProvider from "./app/context/ContextProvider";
 
 const container = document.getElementById("root");
 if (!container) {
