@@ -30,6 +30,7 @@ export default function PausedOrders(props: PausedOrdersProps) {
 
   /** HANDLERS **/
 
+  // [KETMA-KETLIK-COMMENT: 7.3-BOSQICH (CALL)] deleteOrderHandler: Buyurtmani bekor qilish (DELETE) va orderBuilder ni yangilash
   const deleteOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Messages.error2);
@@ -51,6 +52,7 @@ export default function PausedOrders(props: PausedOrdersProps) {
       sweetErrorHandling(err).then();
     }
   };
+  // [KETMA-KETLIK-COMMENT: 7.3-BOSQICH (CALL)] processOrderHandler: To'lovni amalga oshirish (PROCESS), tabni o'zgartirish va orderBuilder ni yangilash
   const processOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Messages.error2);

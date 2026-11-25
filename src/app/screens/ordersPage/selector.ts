@@ -1,3 +1,4 @@
+// [KETMA-KETLIK-COMMENT: 5.2-BOSQICH (DEFINE)] ordersPage selectorlari (retrievePausedOrders, retrieveProcessOrders, retrieveFinishedOrders)
 import { createSelector } from "reselect";
 import { AppRootState } from "../../../lib/types/screen";
 

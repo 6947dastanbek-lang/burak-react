@@ -1,6 +1,6 @@
-# 19-Noyabr 20:00 dan Keyin Qilingan Barcha O'zgarishlar va Ketma-ketlik
+# 19-23 Noyabr Oralig'ida Qilingan Barcha O'zgarishlar va Ketma-ketlik
 
-Bu hujjatda 19-noyabr soat 20:00 dan keyin loyihada qilingan barcha o'zgarishlar, ularning mantiqlari hamda **DEFINE** (qayerda ta'riflangan) va **CALL** (qayerda chaqirilib ishlatilgan) joylari 1, 2, 3, 4 ketma-ketlikda batafsil bayon etilgan.
+Bu hujjatda loyihada qilingan barcha o'zgarishlar, ularning mantiqlari hamda **DEFINE** (qayerda ta'riflangan) va **CALL** (qayerda chaqirilib ishlatilgan) joylari 1 dan 7 gacha ketma-ketlikda batafsil bayon etilgan.
 
 ---
 
@@ -60,6 +60,7 @@ Xabarlarni chiroyli ko'rsatish (Toast / Popups) hamda Login va Signup uchun yago
 * **CALL (Ishlatilgan joylari):**
   * `auth/index.tsx` (Login va Signup muvaffaqiyatli yoki xato bo'lganda)
   * `App.tsx` (Logout jarayonida)
+  * `Basket.tsx`, `PausedOrders.tsx`, `ProcessOrders.tsx` (Buyurtma jarayonlarida xatoliklarni ko'rsatishda)
 
 ---
 
@@ -194,21 +195,143 @@ Ilovaning barcha qismida foydalanuvchi ma'lumotlariga kirish va uning sessiyasin
 
 ---
 
+## 5. ORDERSPAGE REDUX KONFIGURATSIYASI VA BUYURTMA MODELLARI (22-Noyabr)
+
+Buyurtmalar sahifasi (`ordersPage`) uchun Redux state boshqaruvi va ma'lumotlar modellari to'liq qurildi.
+
+### 5.1. Buyurtma turlari (Types):
+* **DEFINE (Ta'riflangan joyi):**
+  * Fayl: `order.ts`
+  * Modellari:
+    * `OrderItemInput`: Buyurtma yaratish uchun yuboriladigan taom ma'lumoti (`itemQuantity`, `itemPrice`, `productId`).
+    * `OrderItem`: Backenddan qaytuvchi bitta buyurtma elementi.
+    * `Order`: Buyurtmaning umumiy modeli (`_id`, `orderTotal`, `orderDelivery`, `orderStatus`, `orderItems`, `productData`).
+    * `OrderInquiry`: Buyurtmalarni status bo'yicha so'rab olish filtri (`page`, `limit`, `orderStatus`).
+    * `OrderUpdateInput`: Buyurtma holatini o'zgartirish uchun model (`orderId`, `orderStatus`).
+* **CALL (Ishlatilgan joylari):**
+  * `screen.ts` da `OrdersPageState` interfeysida
+  * `OrderService.ts`, `ordersPage/index.tsx`, `PausedOrders.tsx`, `ProcessOrders.tsx`, `FinishedOrders.tsx`
+
+---
+
+### 5.2. `ordersPage` Slice va Selectorlar:
+* **DEFINE (Ta'riflangan joyi):**
+  * Fayl: `ordersPage/slice.ts`
+    * State: `pausedOrders: []`, `processOrders: []`, `finishedOrders: []`
+    * Reducerlar: `setPausedOrders`, `setProcessOrders`, `setFinishedOrders`
+  * Fayl: `ordersPage/selector.ts`
+    * Selectorlar: `retrievePausedOrders`, `retrieveProcessOrders`, `retrieveFinishedOrders`
+* **CALL (Ishlatilgan joylari):**
+  * `store.ts` da: `ordersPage: OrdersPageReducer` markaziy do'konga bog'landi.
+  * `ordersPage/index.tsx` da: Reducerlar `useDispatch` orqali ulandi.
+  * `PausedOrders.tsx`, `ProcessOrders.tsx`, `FinishedOrders.tsx` da: `useSelector` orqali tegishli buyurtmalar ro'yxati o'qib olindi.
+
+---
+
+## 6. BUYURTMA BERISH VA BUYURTMALARNI YUKLASH (23-Noyabr)
+
+Savatchadagi taomlarni serverga yuborib buyurtma hosil qilish hamda `OrdersPage` ochilganda buyurtmalarni yuklash mantig'i tuzildi.
+
+### 6.1. `OrderService` asosiy metodlari:
+* **DEFINE (Ta'riflangan joyi):**
+  * Fayl: `OrderService.ts`
+  * Metodlar:
+    1. `createOrder(input: CartItem[]): Promise<Order>`:
+       * Savatchadagi `CartItem[]` ni `OrderItemInput[]` formatiga o'tkazadi.
+       * `/order/create` manziliga `POST` so'rov yuboradi (`withCredentials: true`).
+    2. `getMyOrders(input: OrderInquiry): Promise<Order[]>`:
+       * `/order/all?page=...&limit=...&orderStatus=...` manziliga `GET` so'rov yuboradi.
+* **CALL (Ishlatilgan joylari):**
+  * **Buyurtma berish CALL:**
+    * Fayl: `Basket.tsx` dagi `procceedOrderHandler` funksiyasi:
+      ```typescript
+      const order = new OrderService();
+      await order.createOrder(cartItems);
+      onDeleteAll();
+      setOrderBuilder(new Date());
+      history.push("/orders");
+      ```
+  * **Buyurtmalarni yuklash CALL:**
+    * Fayl: `ordersPage/index.tsx` dagi `useEffect`:
+      * `order.getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })` ➔ `setPausedOrders(data)`
+      * `order.getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })` ➔ `setProcessOrders(data)`
+      * `order.getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })` ➔ `setFinishedOrders(data)`
+
+---
+
+## 7. BUYURTMA STATUSLARINI YANGILASH VA AVTO-YANGILANISH (`orderBuilder`) (23-Noyabr)
+
+Buyurtma to'langanda, bekor qilinganda yoki topshirilganda uning statusini o'zgartirish va butun sahifadagi ma'lumotlarni Context orqali darhol qayta yuklash tizimi joriy etildi.
+
+### 7.1. Global `orderBuilder` Context State (Avto-yangilanish drayveri):
+* **Muammo:** Buyurtma berilganda yoki status o'zgarganda foydalanuvchi sahifani yangilamasa, o'zgarish ko'rinmas edi.
+* **DEFINE (Ta'riflangan joyi):**
+  * Fayl: `useGlobals.ts` ➔ `orderBuilder: Date` va `setOrderBuilder: (input: Date) => void`
+  * Fayl: `contextProvider.tsx` ➔ `const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());`
+* **CALL (Ishlatilgan joylari):**
+  * `ordersPage/index.tsx` ning `useEffect` hooki `[orderInquiry, orderBuilder]` ga bog'landi.
+  * Qachonki biror amal bajarilib, `setOrderBuilder(new Date())` chaqirilsa, `OrdersPage` dagi barcha buyurtmalar (PAUSE, PROCESS, FINISH) avtomatik qayta yuklanadi!
+
+---
+
+### 7.2. `OrderService.updateOrder`:
+* **DEFINE (Ta'riflangan joyi):**
+  * Fayl: `OrderService.ts`
+  * Metod:
+    ```typescript
+    public async updateOrder(input: OrderUpdateInput): Promise<Order> {
+      const url = `${this.path}/order/update`;
+      const result = await axios.post(url, input, { withCredentials: true });
+      return result.data;
+    }
+    ```
+
+---
+
+### 7.3. Buyurtmalarni boshqarish amallari:
+* **CALL (Ishlatilgan joylari):**
+  1. **Buyurtmani bekor qilish (`OrderStatus.DELETE`):**
+     * Fayl: `PausedOrders.tsx` ➔ `deleteOrderHandler`:
+       * Foydalanuvchidan tasdiq oladi (`window.confirm`).
+       * `order.updateOrder({ orderId, orderStatus: OrderStatus.DELETE })` yuboradi.
+       * `setOrderBuilder(new Date())` orqali ro'yxatni yangilaydi.
+  2. **To'lov qilish va jarayonga o'tkazish (`OrderStatus.PROCESS`):**
+     * Fayl: `PausedOrders.tsx` ➔ `processOrderHandler`:
+       * `order.updateOrder({ orderId, orderStatus: OrderStatus.PROCESS })` yuboradi.
+       * `setValue("2")` orqali darhol "PROCESS ORDERS" tabiga o'tkazadi.
+       * `setOrderBuilder(new Date())` qiladi.
+  3. **Buyurtmani qabul qilib, yakunlash (`OrderStatus.FINISH`):**
+     * Fayl: `ProcessOrders.tsx` ➔ `finishOrderHandler`:
+       * "Verify to Fulfil" bosilganda `order.updateOrder({ orderId, orderStatus: OrderStatus.FINISH })` yuboradi.
+       * `setValue("3")` orqali "FINISHED ORDERS" tabiga o'tkazadi.
+       * `setOrderBuilder(new Date())` qiladi.
+
+---
+
 ## XULOSA: FAYLLAR VA ULARNING ROLI
 
 | Fayl nomi | Qilingan ish / Vazifasi | Asosiy ro'li |
 |---|---|---|
 | `search.ts` | `CartItem` interfeysi yaratildi | **DEFINE** (Data model) |
 | `useBasket.ts` | `useBasket` hooki va savatcha amallari (`onAdd`, `onRemove`, `onDelete`, `onDeleteAll`) | **DEFINE** (Biznes mantiq) |
-| `Basket.tsx` | Savatcha UI oynasi, jami narxni hisoblash | **CALL** (`useBasket` ma'lumotlari) |
+| `Basket.tsx` | Savatcha UI oynasi, jami narxni hisoblash, `createOrder` chaqirish | **CALL** (`useBasket`, `OrderService`) |
 | `Products.tsx` | Taom kartasidan savatchaga qo'shish | **CALL** (`onAdd`) |
 | `ChosenProduct.tsx` | Taom profilidan savatchaga qo'shish | **CALL** (`onAdd`) |
 | `sweetAlert.ts` | SweetAlert2 xabar funksiyalari | **DEFINE** (Universal alertlar) |
 | `auth/index.tsx` | `AuthenticationModal`, formalar, rasm yuklash | **DEFINE** (Modal UI & Form mantiq) |
-| `MemberService.ts` | `signup`, `login`, `logout` axios so'rovlari | **DEFINE** (Backend API xizmati) |
-| `useGlobals.ts` | `GlobalContext` va `useGlobals` hooki | **DEFINE** (Global Auth state) |
-| `contextProvider.tsx` | Cookie tekshiruvi va Context Provider | **DEFINE & WRAPPER** |
+| `MemberService.ts` | `signup`, `login`, `logout` axios so'rovlari | **DEFINE** (Backend Auth xizmati) |
+| `useGlobals.ts` | `GlobalContext` va `useGlobals` hooki (`authMember`, `orderBuilder`) | **DEFINE** (Global State) |
+| `contextProvider.tsx` | Cookie tekshiruvi, `authMember` va `orderBuilder` ta'minoti | **DEFINE & WRAPPER** |
 | `index.tsx` | `<ContextProvider>` ni ilova ildiziga o'rash | **CALL** (`ContextProvider`) |
 | `HomeNavbar.tsx` | Dinamik header (Avatar, Logout menyusi, Login/Signup) | **CALL** (`useGlobals`, `authModal`, `Basket`) |
 | `OtherNavbar.tsx` | Boshqa sahifalar uchun dinamik header | **CALL** (`useGlobals`, `authModal`, `Basket`) |
 | `App.tsx` | Savatcha, Auth modal va Logout boshqaruv markazi | **CALL** (`useBasket`, `authModal`, `MemberService`, `sweetAlert`) |
+| `order.ts` | `OrderItem`, `Order`, `OrderInquiry`, `OrderUpdateInput` interfeyslari | **DEFINE** (Order data modellari) |
+| `ordersPage/slice.ts` | `ordersPageSlice` (`pausedOrders`, `processOrders`, `finishedOrders`) | **DEFINE** (Redux State) |
+| `ordersPage/selector.ts` | `retrievePausedOrders`, `retrieveProcessOrders`, `retrieveFinishedOrders` | **DEFINE** (Reselect) |
+| `store.ts` | `OrdersPageReducer` ni markaziy Redux store'ga ulash | **CALL** (`ordersPage` ulash) |
+| `OrderService.ts` | `createOrder`, `getMyOrders`, `updateOrder` API chaqiruvlari | **DEFINE** (Backend Order xizmati) |
+| `ordersPage/index.tsx` | Tablar navigatsiyasi va buyurtmalarni yuklash (`orderBuilder` bilan) | **CALL** (`OrderService`, Redux dispatch) |
+| `PausedOrders.tsx` | Kutilayotgan buyurtmalar, bekor qilish (`DELETE`) va to'lov (`PROCESS`) | **CALL** (`OrderService`, `orderBuilder`) |
+| `ProcessOrders.tsx` | Jarayondagi buyurtmalar va yakunlash (`FINISH`) amali | **CALL** (`OrderService`, `orderBuilder`) |
+| `FinishedOrders.tsx` | Yakunlangan buyurtmalar ro'yxatini ko'rsatish | **CALL** (Redux selector) |

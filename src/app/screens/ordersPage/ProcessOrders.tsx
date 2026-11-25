@@ -28,6 +28,7 @@ export default function ProcessorOrders(props: ProcessOrdersProps) {
   const { authMember, setOrderBuilder } = useGlobals();
   const { processOrders } = useSelector(processOrdersRetriever);
   /** HANDLERS **/
+  // [KETMA-KETLIK-COMMENT: 7.3-BOSQICH (CALL)] finishOrderHandler: Buyurtmani qabul qilib yakunlash (FINISH), tabni o'zgartirish va orderBuilder ni yangilash
   const finishOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Messages.error2);

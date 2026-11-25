@@ -1,3 +1,4 @@
+// [KETMA-KETLIK-COMMENT: 5.1-BOSQICH (DEFINE)] Buyurtma ma'lumot modellari (Order, OrderItem, OrderInquiry, OrderUpdateInput)
 import { OrderStatus } from "../enums/order.enum";
 import { Product } from "./product";
 

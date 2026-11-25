@@ -4,6 +4,7 @@ import { Member } from "../../lib/types/member";
 interface GlobalInterface {
   authMember: Member | null;
   setAuthMember: (member: Member | null) => void;
+  // [KETMA-KETLIK-COMMENT: 7.1-BOSQICH (DEFINE)] orderBuilder: Buyurtmalar o'zgarganda sahifani avto-yangilash uchun state
   orderBuilder: Date;
   setOrderBuilder: (input: Date) => void;
 }

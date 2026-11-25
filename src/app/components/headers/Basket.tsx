@@ -42,6 +42,7 @@ export default function Basket(props: BasketProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  // [KETMA-KETLIK-COMMENT: 6.2 & 7.1-BOSQICH (CALL)] procceedOrderHandler: order.createOrder() chaqirish, savatchani tozalash va orderBuilder ni yangilash
   const procceedOrderHandler = async () => {
     try {
       handleClose();

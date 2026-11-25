@@ -12,6 +12,7 @@ export const store = configureStore({
   reducer: {
     homePage: HomePageReducer,
     productsPage: ProductsPageReducer,
+    // [KETMA-KETLIK-COMMENT: 5.2-BOSQICH (CALL)] OrdersPageReducer ni markaziy Redux store'ga ulash
     ordersPage: OrdersPageReducer,
   }, // reducerlarni yaqlit holda bizni Redux storga boglandi.
 });

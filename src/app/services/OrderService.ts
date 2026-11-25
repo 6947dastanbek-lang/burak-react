@@ -15,6 +15,7 @@ class OrderService {
     this.path = serverApi;
   }
 
+  // [KETMA-KETLIK-COMMENT: 6.1-BOSQICH (DEFINE)] createOrder: Savatchadagi taomlarni serverga yuborib yangi buyurtma yaratish
   public async createOrder(input: CartItem[]): Promise<Order> {
     try {
       const orderItems: OrderItemInput[] = input.map((cartItem: CartItem) => {
@@ -37,6 +38,7 @@ class OrderService {
       throw err;
     }
   }
+  // [KETMA-KETLIK-COMMENT: 6.1-BOSQICH (DEFINE)] getMyOrders: Status bo'yicha buyurtmalarni serverdan olish
   public async getMyOrders(input: OrderInquiry): Promise<Order[]> {
     try {
       // axios.defaults.withCredentials = true;
@@ -52,6 +54,7 @@ class OrderService {
       throw err;
     }
   }
+  // [KETMA-KETLIK-COMMENT: 7.2-BOSQICH (DEFINE)] updateOrder: Buyurtma statusini serverda yangilash
   public async updateOrder(input: OrderUpdateInput): Promise<Order> {
     try {
       const url = `${this.path}/order/update`;

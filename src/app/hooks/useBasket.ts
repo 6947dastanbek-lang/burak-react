@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CartItem } from "../../lib/types/search";
 
+// [KETMA-KETLIK-COMMENT: 1.2-BOSQICH (DEFINE)] Savatchaning barcha biznes mantig'ini boshqaruvchi useBasket custom hook
 const useBasket = () => {
   const cartJson: string | null = localStorage.getItem("cartData");
   const currentCart = cartJson ? JSON.parse(cartJson) : [];

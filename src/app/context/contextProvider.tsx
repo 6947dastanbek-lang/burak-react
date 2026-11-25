@@ -4,14 +4,15 @@ import { Member } from "../../lib/types/member";
 import { GlobalContext } from "../hooks/useGlobals";
 
 const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const cookies = new Cookies();
-  if (!cookies.get("accessToken")) localStorage.removeItem("memberData");
+  const cookies = new Cookies(); //cookie dastup alip
+  if (!cookies.get("accessToken")) localStorage.removeItem("memberData"); //bolmasa local storag oshir degen
 
   const [authMember, setAuthMember] = useState<Member | null>(
     localStorage.getItem("memberData")
       ? JSON.parse(localStorage.getItem("memberData") as string)
       : null,
   );
+  // [KETMA-KETLIK-COMMENT: 7.1-BOSQICH (DEFINE)] orderBuilder state va setOrderBuilder ni Provider ga ulash
   const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
 
   console.log("=== verify ===");

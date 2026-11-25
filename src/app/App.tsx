@@ -26,6 +26,7 @@ import "../css/footer.css";
 function App() {
   const location = useLocation();
   const { setAuthMember } = useGlobals();
+  // [KETMA-KETLIK-COMMENT: 1.2-BOSQICH (CALL)] useBasket hookini chaqirish va savatcha amallarini qabul qilish
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
   const [signupOpen, setSignupOpen] = useState<boolean>(false);
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
@@ -40,6 +41,7 @@ function App() {
     setAnchorEl(e.currentTarget);
   };
   const handleCloseLogout = () => setAnchorEl(null);
+  // [KETMA-KETLIK-COMMENT: 3.1 & 4.3-BOSQICH (CALL)] Logout: MemberService.logout() chaqirish, savatcha va authMember ni tozalash
   const handleLogoutRequest = async () => {
     try {
       const member = new MemberService();

@@ -7,6 +7,7 @@ const initialState: OrdersPageState = {
   finishedOrders: [],
 };
 
+// [KETMA-KETLIK-COMMENT: 5.2-BOSQICH (DEFINE)] ordersPageSlice: Buyurtmalar state'i (pausedOrders, processOrders, finishedOrders)
 const ordersPageSlice = createSlice({
   name: "ordersPage",
   initialState,
